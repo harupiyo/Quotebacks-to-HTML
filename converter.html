@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<head lang="ja">
+<meta charset="UTF-8">
+<title>QuoteBack Library の[⚙]-[export] で保存した.json データをブラウザで直接開ける.html形式に変換するツール</title>
+</head>
+<body>
+<h1>QuoteBack Library to HTML</h1>
+<textarea id="src" cols="150" rows="25" placeholder="QuoteBack Library の[⚙]-[export] で保存した.json データをこの枠内に貼り付けてください。"></textarea>
+<p>貼り付けたあと、マウスで枠外をクリックしてください。</p>
+<script>
+const timestampToTime = (timestamp) => {
+  const date = new Date(timestamp);
+  const yyyy = `${date.getFullYear()}`;
+  const MM = `0${date.getMonth() + 1}`.slice(-2); // getMonth()の返り値は0が基点
+  const dd = `0${date.getDate()}`.slice(-2);
+  const HH = `0${date.getHours()}`.slice(-2);
+  const mm = `0${date.getMinutes()}`.slice(-2);
+  const ss = `0${date.getSeconds()}`.slice(-2);
+  return `${yyyy}年${MM}月${dd}日 ${HH}時${mm}分${ss}秒`;
+}
+
+function saveAs(){
+	var src = JSON.parse(document.querySelector('#src').value);
+	var quotebacks = '';
+	for (let key in src) {
+		let title = src[key].title;
+		let title_encode = encodeURI(title);
+		let url = src[key].url;
+		for (let i = 0 ; i < src[key].quotes.length ; i++ ){
+			let text = src[key].quotes[i].text;
+			let comment = src[key].quotes[i].comment === '' ? '' : `<p class="comment">→${src[key].quotes[i].comment}</p>`;
+			let timestamp = src[key].quotes[i].date;
+			let datetime = timestampToTime(timestamp);
+
+			quotebacks += `
+<blockquote class="quoteback" data-title="${title_encode}" cite="${url}">
+${text}
+<footer>
+	<p>${datetime}</p>${comment}<cite><a href="${url}">${url}</a></cite>より
+</footer>
+</blockquote>
+`;
+		}
+	}
+
+	var dest = `<!DOCTYPE html>
+<head lang="ja">
+<meta charset="UTF-8">
+<title>調査ログ</title>
+</head>
+<body>
+${quotebacks}
+<script src="https://cdn.jsdelivr.net/gh/Blogger-Peer-Review/quotebacks@1/quoteback.js"><\/script>
+</body>
+</html>`;
+
+	// 名前を付けて保存
+	var a = document.createElement('a');
+	a.href = 'data:text/plain,' + encodeURIComponent(dest);
+	a.download = timestampToTime(Date.now()) + '.html';
+	a.style.display = 'none';
+	document.body.appendChild(a); // ※ DOM が構築されてからでないとエラーになる
+	a.click();
+	document.body.removeChild(a);
+}
+
+var src = document.querySelector('#src');
+src.addEventListener('change', saveAs);
+</script>
+</body>
+</html>
