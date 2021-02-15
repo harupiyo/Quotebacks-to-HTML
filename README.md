@@ -1,7 +1,7 @@
 # Quotebacks => .html コンバーター
 
 ## これは何ですか？
-**Quotebacks**(https://github.com/Blogger-Peer-Review/quotebacks) を利用しWeb のスクラップブックを作ったあと、その全体を他人と共有するためにHTML 化したいときにこのツールを使ってください。
+**Quotebacks**(https://github.com/Blogger-Peer-Review/quotebacks) を利用しWeb のスクラップブックを作ったあと、そのデータベースを他人と共有するためにHTML 化したいときのためのツールです。
 
 ## 使い方
 
@@ -21,6 +21,7 @@ Quotebacks からExport した.json ファイルを、本リポジトリーが�
 ## 展望
 - .json をドロップするだけの簡単操作にしたい。
 - Quotebacks ではスクラップ記事に「コメント」をつけることができます。スクラップ時の考察メモとして貴重な情報源であるので、それも .html 側で読めるようにしたい。
+- Markdown やOrg 形式にも対応したい。
 
 ## Note: スクラップブックは知的生産のための便利なツール
 Web で調査をしている時など、スクラップブックを作りたい時があります。
@@ -40,3 +41,6 @@ Web で調査をしている時など、スクラップブックを作りたい�
 
 ここでは**Quotebacks**(https://github.com/Blogger-Peer-Review/quotebacks) を活用するツールについて紹介しました。
 
+## Note: Quotebacks への要望
+- 表も取り込めるようにしてほしい
+- 取り込んだあと、[ESC] でポップアップを非表示になるようにしてほしい。(長くキャプチャした場合、閉じるボタンが見えないところに行ってしまい閉じれないことがある)
